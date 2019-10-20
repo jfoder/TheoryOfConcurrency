@@ -27,4 +27,16 @@ public class Shop {
     public void setSemaphore(Semaphore semaphore) {
         this.semaphore = semaphore;
     }
+
+    public Basket getBasket() {
+        if (basketList.size() > 0)
+            return basketList.remove(0);
+
+        else
+            throw new RuntimeException("Client was trying to get basket while no basket was available");
+    }
+
+    public void returnBasket(Basket basket) {
+        basketList.add(basket);
+    }
 }
