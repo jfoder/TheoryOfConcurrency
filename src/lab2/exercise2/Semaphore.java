@@ -16,11 +16,11 @@ public class Semaphore {
                 e.printStackTrace();
             }
         }
-        this.counter++;
+        this.counter--;
     }
 
     public synchronized void semaphoreRelease() {
-        this.counter--;
+        this.counter++;
         notifyAll();
     }
 }

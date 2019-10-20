@@ -2,10 +2,9 @@ package lab2.exercise2;
 
 import java.util.Random;
 
-public class Client {
+public class Client implements Runnable {
 
     private Shop shop;
-    private Basket basket;
     private int clientNumber;
 
     public Client(Shop shop, int clientNumber) {
@@ -16,7 +15,7 @@ public class Client {
     public void goShopping() {
         shop.getSemaphore().semaphoreWait();
 
-        this.basket = shop.getBasket();
+        Basket basket = shop.getBasket();
         System.out.println("[" + clientNumber + "] gets basket");
         try {
             Thread.sleep((new Random().nextInt() % 1000) + 1000);
@@ -25,8 +24,12 @@ public class Client {
         }
         shop.returnBasket(basket);
         System.out.println("[" + clientNumber + "] returns basket");
-        basket = null;
 
         shop.getSemaphore().semaphoreRelease();
+    }
+
+    @Override
+    public void run() {
+        goShopping();
     }
 }
