@@ -13,8 +13,6 @@ public class Client implements Runnable {
     }
 
     public void goShopping() {
-        shop.getSemaphore().semaphoreWait();
-
         Basket basket = shop.getBasket();
         System.out.println("[" + clientNumber + "] gets basket");
         try {
@@ -24,8 +22,6 @@ public class Client implements Runnable {
         }
         shop.returnBasket(basket);
         System.out.println("[" + clientNumber + "] returns basket");
-
-        shop.getSemaphore().semaphoreRelease();
     }
 
     @Override

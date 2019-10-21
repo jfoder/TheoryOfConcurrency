@@ -1,6 +1,6 @@
 package lab2.exercise1;
 
-class BinarySemaphore {
+public class BinarySemaphore {
 
     private boolean available;
 
