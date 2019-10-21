@@ -12,20 +12,8 @@ public class Shop {
         this.semaphore = new Semaphore(basketList.size());
     }
 
-    public List<Basket> getBasketList() {
-        return basketList;
-    }
-
-    public void setBasketList(List<Basket> basketList) {
-        this.basketList = basketList;
-    }
-
     public Semaphore getSemaphore() {
         return semaphore;
-    }
-
-    public void setSemaphore(Semaphore semaphore) {
-        this.semaphore = semaphore;
     }
 
     public Basket getBasket() {
