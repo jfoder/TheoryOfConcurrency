@@ -26,20 +26,20 @@ public class Waiter {
         }
     }
 
-    public void sit(Person person) {
+    public void sit(Client client) {
         lock.lock();
         try {
-            System.out.println("Person [" + person.getPersonId() + "] from pair [" + person.getPairId() + "] is waiting for a table");
-            requests[person.getPairId()]++;
+            System.out.println("Client [" + client.getPersonId() + "] from pair [" + client.getPairId() + "] is waiting for a table");
+            requests[client.getPairId()]++;
 
-            if (requests[person.getPairId()] < 2) {
-                bothPeopleFromPairWantsTable[person.getPairId()].await();
+            if (requests[client.getPairId()] < 2) {
+                bothPeopleFromPairWantsTable[client.getPairId()].await();
             } else {
                 while (numberOfClients > 0) {
                     isTableFree.await();
                 }
                 numberOfClients = 2;
-                System.out.println("Both people from pair [" + person.getPairId() + "] sat down");
+                System.out.println("Both people from pair [" + client.getPairId() + "] sat down");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -48,11 +48,11 @@ public class Waiter {
         }
     }
 
-    public void getUp(Person person) {
+    public void getUp(Client client) {
         lock.lock();
         try {
             numberOfClients--;
-            System.out.println("Person [" + person.getPersonId() + "] from pair [" + person.getPairId() + "] has left the table");
+            System.out.println("Client [" + client.getPersonId() + "] from pair [" + client.getPairId() + "] has left the table");
             isTableFree.signal();
         } finally {
             lock.unlock();
