@@ -29,7 +29,6 @@ public class Waiter {
     public void sit(Client client) {
         lock.lock();
         try {
-            System.out.println("Client [" + client.getPersonId() + "] from pair [" + client.getPairId() + "] is waiting for a table");
             requests[client.getPairId()]++;
 
             if (requests[client.getPairId()] < 2) {
@@ -39,7 +38,9 @@ public class Waiter {
                     isTableFree.await();
                 }
                 numberOfClients = 2;
+                requests[client.getPairId()] -= 2;
                 System.out.println("Both people from pair [" + client.getPairId() + "] sat down");
+                bothPeopleFromPairWantsTable[client.getPairId()].signalAll();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -52,8 +53,9 @@ public class Waiter {
         lock.lock();
         try {
             numberOfClients--;
-            System.out.println("Client [" + client.getPersonId() + "] from pair [" + client.getPairId() + "] has left the table");
-            isTableFree.signal();
+            System.out.println("Client [" + client.getPersonId() + "] from pair [" + client.getPairId() + "] has left the table ");
+            if (numberOfClients == 0)
+                isTableFree.signal();
         } finally {
             lock.unlock();
         }
