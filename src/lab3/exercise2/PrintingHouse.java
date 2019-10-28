@@ -30,7 +30,7 @@ public class PrintingHouse {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Printer result = printers.get(0);
+        Printer result = printers.remove(0);
         lock.unlock();
         return result;
     }

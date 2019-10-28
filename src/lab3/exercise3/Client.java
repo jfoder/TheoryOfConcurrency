@@ -32,15 +32,16 @@ public class Client implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < numberOfReservations; i++) {
+            System.out.println("Client [" + personId + "] from pair [" + pairId + "] ordered a place");
             waiter.sit(this);
             try {
-                Thread.sleep(Math.abs(new Random().nextInt() % 200));
+                Thread.sleep(Math.abs(new Random().nextInt() % 500) + 500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             waiter.getUp(this);
             try {
-                Thread.sleep(Math.abs(new Random().nextInt() % 200));
+                Thread.sleep(Math.abs(new Random().nextInt() % 500) + 500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
