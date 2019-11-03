@@ -2,10 +2,9 @@ package lab5;
 
 import java.util.concurrent.Callable;
 
-import static lab5.Constants.MAX_ITER;
-import static lab5.Constants.ZOOM;
+import static lab5.Constants.*;
 
-public class MandelbrotPixelProcessor implements Callable {
+public class MandelbrotPixelProcessor implements Callable<MandelbrotPixel> {
 
     private int x;
     private int y;
@@ -16,11 +15,11 @@ public class MandelbrotPixelProcessor implements Callable {
     }
 
     @Override
-    public Object call() throws Exception {
+    public MandelbrotPixel call() throws Exception {
         double zx = 0;
         double zy = 0;
-        double cX = (x - 960) / ZOOM;
-        double cY = (y - 540) / ZOOM;
+        double cX = (x - WIDTH / 2) / ZOOM;
+        double cY = (y - HEIGHT / 2) / ZOOM;
         int iter = MAX_ITER;
 
         while (zx * zx + zy * zy < 4 && iter > 0) {
